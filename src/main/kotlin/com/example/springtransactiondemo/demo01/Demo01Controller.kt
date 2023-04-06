@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("demo01")
 class Demo01Controller(
-    private val tDemoPropagationService: TDemoPropagationService,
+    private val demo01PropagationService: Demo01PropagationService,
     private val demo01ServiceWithRollback: Demo01ServiceWithRollback
 ) {
 
@@ -25,6 +25,6 @@ class Demo01Controller(
     fun createCoffeeAndEvent(
         @RequestParam("flag") flag: Boolean
     ) {
-        tDemoPropagationService.createCoffeeWithEvent(flag)
+        demo01PropagationService.createCoffeeWithEvent(flag)
     }
 }
