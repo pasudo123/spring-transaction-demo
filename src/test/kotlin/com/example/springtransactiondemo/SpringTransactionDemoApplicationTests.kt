@@ -9,5 +9,4 @@ class SpringTransactionDemoApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }
