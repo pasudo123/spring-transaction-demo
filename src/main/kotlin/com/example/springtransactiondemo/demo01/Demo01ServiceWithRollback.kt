@@ -1,8 +1,5 @@
 package com.example.springtransactiondemo.demo01
 
-import com.example.springtransactiondemo.exception.CustomCheckedException
-import com.example.springtransactiondemo.exception.SystemError
-import com.example.springtransactiondemo.exception.SystemException
 import com.example.springtransactiondemo.model.Coffee
 import com.example.springtransactiondemo.model.CoffeeRepository
 import com.example.springtransactiondemo.model.Query
@@ -18,10 +15,8 @@ class Demo01ServiceWithRollback(
     private val log = LoggerFactory.getLogger(javaClass)
 
     /**
-     * ForceCommitException 은 예외가 발생해도 commit 이 됩니다.
-     * 왜냐하면, Exception 클래스를 상속받은 UnCheckedException 이기 때문입니다.
-     *
-     * 그 외에는 모두 롤백됩니다. (RuntimeException, Error 를 상속받은 클래스들...)
+     * RuntimeException, Error 은 UnCheckedException 이기 때문에 롤백
+     * Exception 은 롤백되지 않음 따라서 별도 rollbackFor=[] 설정이 필요
      */
     @Transactional(rollbackFor = [])
     fun queryWithSize(query: Query, size: Int) {
@@ -33,7 +28,7 @@ class Demo01ServiceWithRollback(
 
         if (query == Query.Q_THROW_ERROR) {
             log.info("error 를 throw 한다. : 롤백처리")
-            throw SystemError("$query 발생")
+            throw Error("$query 발생")
         }
 
         /**
@@ -42,12 +37,12 @@ class Demo01ServiceWithRollback(
          */
         if (query == Query.Q_THROW_EXCEPTION) {
             log.info("exception 을 throw 한다. : 명시적 롤백처리 필요")
-            throw CustomCheckedException("$query 발생")
+            throw Exception("$query 발생")
         }
 
         if (query == Query.Q_THROW_RUNTIME_EXCEPTION) {
             log.info("RuntimeException 을 throw 한다. : 롤백처리")
-            throw SystemException("$query 발생")
+            throw RuntimeException("$query 발생")
         }
     }
 }

@@ -1,0 +1,9 @@
+### rollback 처리 : Throw RuntimeException()
+GET http://localhost:8080/demo01?query=Q_THROW_RUNTIME_EXCEPTION&size=15
+
+### rollback 처리 : Throw Error()
+GET http://localhost:8080/demo01?query=Q_THROW_ERROR&size=15
+
+### no rollback 처리 : Throe Exception()
+### 별도의 rollbackFor 구문이 필요하다
+GET http://localhost:8080/demo01?query=Q_THROW_EXCEPTION&size=15
